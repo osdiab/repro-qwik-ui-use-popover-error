@@ -8,6 +8,9 @@ import {
 	useSignal,
 	useTask$,
 } from "@builder.io/qwik";
+import {
+	isServer
+} from "@builder.io/qwik/build";
 import { Popover, usePopover } from "@qwik-ui/headless";
 
 
@@ -27,6 +30,9 @@ export const Tooltip = component$<TooltipProps>(
 		useTask$(({ track }) => {
 			track(() => focused.value);
 			track(() => hovered.value);
+			if (isServer) {
+				return;
+			}
 
 			if (focused.value || hovered.value) {
 				showPopover();
